@@ -13,12 +13,22 @@ namespace ConsoleApp_gshark_tester
 			Point3 p1 = new Point3(1, 2, 3);
 			Point3 p2 = new Point3(3, 4, 5);
 
-			Point3 p3 = new Point3(2,3,4);
+			Point3 p3 = new Point3(2, 3, 4);
+			List<Point3> pts = new List<Point3>() { p1, p3, p2 };
 
-			Line ln = new Line(p1, p2);
+			Polyline pl = new Polyline(pts);
 
+			Polyline pl2 = pl.Closed();
 			//output
-			print(ln);
+			print(pl2);
+
+			Console.WriteLine();
+
+			Line[] lines = pl2.Segments;
+			foreach (Line l in lines)
+			{
+				Console.WriteLine(l);
+			}
 
 			Console.ReadLine();
 		}
@@ -28,20 +38,21 @@ namespace ConsoleApp_gshark_tester
 			PropertyInfo[] properties = data.GetType().GetProperties();
 			foreach (PropertyInfo prop in properties)
 			{
-				if (isList(prop.GetValue(data)))
+				try
+				{
+					Console.WriteLine(prop.Name + " = " + prop.GetValue(data));
+				}
+				catch
 				{
 					Console.WriteLine(prop.Name + " = ");
-					dynamic value = prop.GetValue(data);
-					Type type = value.GetType();
-					Console.WriteLine(type);
-					//foreach (dynamic obj in objs)
-					//{
-					//	Console.WriteLine(prop.GetValue(data));
-					//}
-				}
-				else
-				{
-					Console.WriteLine(prop.Name + " = " + prop.GetValue(data)); 
+					try
+					{
+						print(prop.GetValue(data));
+					}
+					catch
+					{
+						Console.WriteLine(prop.Name + " = ");
+					}
 				}
 			}
 		}
