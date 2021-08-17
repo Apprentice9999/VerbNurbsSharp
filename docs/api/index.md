@@ -1,0 +1,1 @@
+**GShark** has the goal to democratize complex geometry computation, is open source, under the MIT license, written from the ground up in csharp.
